@@ -2,10 +2,10 @@ const express = require('express');
 
 const app = express();
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.sendFile('./index.html');
 });
 
 const port = process.env.PORT || 3000;
