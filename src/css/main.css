@@ -1,0 +1,21 @@
+:root {
+	--main-color: #FF7777;
+	--dark-red: #DD4444;
+}
+
+body {
+	background-color: var(--main-color);
+}
+
+button {
+	background-color: var(--dark-red) !important;
+	color: #FFF !important;
+}
+
+.botui-container {
+	background-color: var(--main-color) !important;
+}
+
+.botui-message-content.human {
+	background-color: var(--dark-red);
+}
