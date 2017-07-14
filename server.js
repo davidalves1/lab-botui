@@ -1,11 +1,12 @@
 const express = require('express');
 
 const app = express();
+const path = require("path");
 
 // app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.sendFile('./index.html');
+  res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 const port = process.env.PORT || 3000;
