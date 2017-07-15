@@ -25,40 +25,84 @@ botui.action.text({
 		delay: 500,
 		content: `Muito bem ${res.value}, por onde quer começar?`
 	})
-}).then(() => {
-	botui.action.button({
-		delay: 1500,
-		action: [
-			{
-				text: 'Planos',
-				value: 'planos'
-			},
-			{
-				text: 'Dúvidas',
-				value: 'duvidas'
+}).then(showMainOptions);
+
+function showMainOptions() {
+	botui.message.bot({
+		delay: 1000,
+		content: 'As opções são:'
+	}).then(() => {
+		botui.action.button({
+			delay: 500,
+			action: [
+				{
+					text: 'Planos',
+					value: 'planos'
+				},
+				{
+					text: 'Dúvidas',
+					value: 'duvidas'
+				}
+			]
+		}).then(res => {
+			switch(res.value) {
+				case 'planos': planMessage();
+					break;
+
+				case 'duvidas': questionMessage();
+					break;
+
+				default: botui.message.bot({
+					delay: 500,
+					content: 'Não entendi o que você quer. Vamos começar novamente. :|'
+				});
 			}
-		]
-	}).then(res => {
-		switch(res.value) {
-			case 'planos': planMessage();
-				break;
+		});
+	});
+}
 
-			case 'duvidas': questionMessage();
-				break;
+function checkContinue() {
+	botui.message.bot({
+		delay: 500,
+		content: 'Tem mais alguma dúvida?'
+	}).then(() => {
+		botui.action.button({
+			delay: 1000,
+			action: [
+				{
+					text: 'Sim',
+					value: 'sim'
+				},
+				{
+					text: 'Nao',
+					value: 'nao'
+				}
+			]
+		}).then(res => {
+			switch(res.value) {
+				case 'sim': showMainOptions();
+					break;
 
-			default: botui.message.bot({
-				delay: 500,
-				content: 'Não entendi o que você quer. Vamos começar novamente. :|'
-			});
-		}
+				case 'nao': botui.message.bot({
+						delay: 500,
+						content: 'Obrigado. Qualquer dúvida pode nos procurar! ;)'
+					});
+					break;
+
+				default: botui.message.bot({
+					delay: 500,
+					content: 'Não entendi o que você quer. Vamos começar novamente. :|'
+				});
+			}
+		});
 	})
-});
+}
 
 function planMessage() {
 	botui.message.bot({
 		delay: 500,
 		content: 'Ok, vou te explicar um pouco mais sobre os nossos planos.'			
-	});
+	}).then(checkContinue);
 }
 
 function questionMessage() {
@@ -85,6 +129,6 @@ function questionMessage() {
 					value: 'telefone'
 				}
 			]
-		})
-	});
+		}).then(checkContinue);
+	})
 }
