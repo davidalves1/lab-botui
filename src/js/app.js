@@ -102,7 +102,12 @@ function planMessage() {
 	botui.message.bot({
 		delay: 500,
 		content: 'Ok, vou te explicar um pouco mais sobre os nossos planos.'			
-	}).then(checkContinue);
+	}).then(() => {
+		botui.message.bot({
+			delay: 1500,
+			content: 'Eles são fantásticos! Sensacionais!'			
+		}).then(checkContinue);
+	})
 }
 
 function questionMessage() {
